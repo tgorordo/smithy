@@ -118,7 +118,9 @@ platformdirs==4.9.6
 pluggy==1.6.0
     # via pytest
 polars==1.40.1
-    # via marimo
+    # via
+    #   smithy (pyproject.toml)
+    #   marimo
 polars-runtime-32==1.40.1
     # via polars
 psutil==7.2.2

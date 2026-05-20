@@ -13,8 +13,12 @@ test:
 format:
   uv run ruff format src test
 
+example:
+  uv run python src/main.py test/test_ballot.csv
+
 compile:
-  uv run pyinstaller src/main.py
+  uv run pyinstaller --clean -F src/main.py --name smithy
+  
 
 clean:
   uv run pyclean src test

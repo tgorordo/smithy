@@ -1,13 +1,14 @@
 import polars as pl
 from itertools import combinations
 
+
 def smith_set(df: pl.DataFrame) -> list:
     """
     Compute the Smith set from a Ranked-Choice ballot.
-    
+
     The Smith set is the minimal set of candidates which can beat all others pairwise - if there is a single winner
     in the set they are guaranteed the Condorcet i.e. Majority winner.
-    
+
     parameters
     ---
     df : pl.DataFrame
@@ -27,7 +28,7 @@ def smith_set(df: pl.DataFrame) -> list:
     candidates = df.columns
 
     # Build pairwise majority graph
-    graph: dict[str, set[str]] = { c: set() for c in candidates }
+    graph: dict[str, set[str]] = {c: set() for c in candidates}
 
     for a, b in combinations(candidates, 2):
         result = df.select(
@@ -46,17 +47,13 @@ def smith_set(df: pl.DataFrame) -> list:
 
     # Find Smith set
     for size in range(1, len(candidates) + 1):
-
         for sub in combinations(candidates, size):
-
             subset = set(sub)
             out = set(candidates) - subset
 
             dom = True
 
             for member in subset:
-
-                # DIRECT dominance only
                 if not out.issubset(graph[member]):
                     dom = False
                     break

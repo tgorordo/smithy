@@ -23,18 +23,23 @@ def _():
 @app.cell
 def _(mo, pl):
     df = pl.read_csv(mo.notebook_dir() / "test_ballot.csv")
-    df = df.with_columns([ pl.col(c) # make safe, clean up
-                             .cast(pl.Utf8)
-                              .str.strip_chars()
-                              .cast(pl.Int64, strict=False).fill_null(df.width + 1)
-                                 for c in df.columns ])
+    df = df.with_columns(
+        [
+            pl.col(c)  # make safe, clean up
+            .cast(pl.Utf8)
+            .str.strip_chars()
+            .cast(pl.Int64, strict=False)
+            .fill_null(df.width + 1)
+            for c in df.columns
+        ]
+    )
     df
     return (df,)
 
 
 @app.cell
 def _(df, smith_set):
-    smith_set(df) # find the smith set (should be "Alice" and "Bob" as a pair)
+    smith_set(df)  # find the smith set (should be "Alice" and "Bob" as a pair)
     return
 
 
