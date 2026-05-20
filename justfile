@@ -4,6 +4,12 @@ list:
 run spreadsheet:
   uv run smithy {{spreadsheet}}
 
+marimo:
+  uv run marimo --edit
+
+example:
+  uv run python src/main.py test/test_ballot.csv
+
 check:
   uv run pyright src
 
@@ -13,13 +19,9 @@ test:
 format:
   uv run ruff format src test
 
-example:
-  uv run python src/main.py test/test_ballot.csv
-
 compile:
   uv run pyinstaller --clean -F src/main.py --name smithy
   
-
 clean:
   uv run pyclean src test
   uv run ruff clean
