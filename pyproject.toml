@@ -1,0 +1,35 @@
+[project]
+name = "smithy"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Thomas (Tom) C. Gorordo", email = "tcgorordo@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "click>=8.4.0",
+    "polars>=1.40.1",
+    "rich>=15.0.0",
+]
+
+[project.scripts]
+smithy = "smithy:main"
+
+[build-system]
+requires = ["uv_build>=0.11.7,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "marimo[recommended]>=0.23.6",
+    "py-spy>=0.4.2",
+    "pyclean>=3.6.0",
+    "pyinstaller>=6.20.0",
+    "pyinstrument>=5.1.2",
+    "pyperf>=2.10.0",
+    "pyright>=1.1.409",
+    "pytest>=9.0.3",
+    "pytest-benchmark>=5.2.3",
+    "ruff>=0.15.13",
+]
