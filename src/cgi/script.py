@@ -59,7 +59,7 @@ if spreadsheet is not None:
                 message = """
                 <h1>Error</h1>
                 <p>File extension is not valid. Use CSV (.csv) or Excel (.xlsx, .xls).</p>
-                <p><a href="../cgi/smithy.html">Go Back</a></p>
+                <p><a href="form.html">Go Back</a></p>
                 """
 
             if df is not None:
@@ -80,13 +80,13 @@ if spreadsheet is not None:
                 message = f"""
                 <h1>The Smith set winners are:</h1>
                 {smiths}
-                <p><a href="../cgi/smithy.html">Go Back</a></p>
+                <p><a href="form.html">Go Back</a></p>
                 """
             else:
                 message = """
                 <h1>Error</h1>
                 <p>DataFrame was empty.</p>
-                <p><a href="../cgi/smithy.html">Go Back</a></p>
+                <p><a href="form.html">Go Back</a></p>
                 """
 
 
@@ -94,7 +94,7 @@ if spreadsheet is not None:
             message = f"""
             <h1>Error</h1>
             <p>Internal Error Encountered: {e}
-            <p><a href="../cgi/smithy.html">Go Back</a></p>
+            <p><a href="form.html">Go Back</a></p>
             """
             traceback.print_exc()
 
@@ -102,14 +102,14 @@ if spreadsheet is not None:
         message = """
         <h1>Error</h1>
         <p>Filename or File Data not found/valid in form submission.</p>
-        <p><a href="../cgi/smithy.html">Go Back</a></p>
+        <p><a href="form.html">Go Back</a></p>
         """
 
 else:
     message = """
     <h1>Error</h1>
     <p>No file field found in the form.</p>
-    <p><a href="../cgi/smithy.html">Go Back</a></p>
+    <p><a href="form.html">Go Back</a></p>
     """
 
 print("""
