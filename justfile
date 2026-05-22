@@ -20,7 +20,7 @@ test:
   uv run pytest -vvv --tb=short --log-cli-level=INFO
 
 compile:
-  uv run pyinstaller --clean -F src/cmd.py --name smithy
+  uv run pyinstaller --clean -F src/cmd.py --name smithycmd
   
 clean:
   uv run pyclean src test
