@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Smithy - RCV Ballot Counter </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="file"] {
+            margin-bottom: 15px;
+        }
+        input[type="submit"] {
+            padding: 8px 16px;
+        }
+    </style>
+</head>
+<body>
+<h1>Smithy: RCV Ballot Counter - CGI Application Upload</h1>
+
+<div class="form-container">
+    <form action="/files/forms/smithy.cgi" method="POST" enctype="multipart/form-data">
+        <label for="spreadsheet">Upload a ballot-box spreadsheet (.xlsx, .xls, .csv):</label>
+        <input type="file" id="spreadsheet" name="spreadsheet" accept=".xlsx,.xls,.csv" required>
+        <br>
+        <input type="submit" value="Upload and Solve!">
+    </form>
+</div>
+
+<div class="explanation-container">
+
+<h2>About</h2>
+<p>This is an upload form for the <a href="https://github.com/tgorordo/smithy">smithy</a> RCV Ballot counter for identifying the Smith set (majority winners) in small elections,
+mainly to help with UO Physics Grad student elections of various flavors. This form uses the <a href="https://service.uoregon.edu/TDClient/2030/Portal/KB/ArticleDet?ID=43069">UO pages.uoregon.edu CGI Capability</a>,
+so the implementation of smithy being invoked can be <a href="https://pages.uoregon.edu/tgorordo/files/smithy/"> inspected here</a>
+and you may also inspect the source of this page to verify that <a href="https://pages.uoregon.edu/tgorordo/files/forms/smithy.cgi">this script<a> is called to invoke it.
+</p>
+
+<p> The <a href="https://en.wikipedia.org/wiki/Smith_set">Smith set</a> is the minimal set of candidates which can beat all others pairwise (by majority ranking)
+- if there is a single winner in the set they are guaranteed the standard <a href=https://en.wikipedia.org/wiki/Condorcet_winner>Condorcet i.e. Majority winner</a>
+(they beat all others pairwise).</p>
+
+<h3>Input: Expected Spreadsheet Format</h3>
+<p>A ballot-box spreadsheet should be organized by columns as candidates and rows as numerical rankings of the candidates -
+i.e. each row is the ranking provided by the ballot of a voter,
+e.g.:</p>
+
+<p>
+<table>
+  <tr>
+    <th>Alice</th>
+    <th>Bob</th>
+    <th>Charlie</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>1</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>3</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>1</td>
+    <td>2</td>
+  </tr>
+</table>
+(which has, as its Smith set a tie between "Alice" and "Bob")</p>
+ 
+<h3>Output: Smith Set Format</h3>
+<p>The form will return a list of the Smith-set winners sorted lexicographically (they are all equally good majority winners).
+It might be helpful for clarity to provide the input sheet's columns already in lexicographic order, but this is not required. </p>
+</div>
+</body>
+<footer>
+  <hr>
+  <p>Author: <a href="https://pages.uoregon.edu/tgorordo">Thomas (Tom) C. Gorordo</a>
+     Source: <a href="https://github.com/tgorordo/pages.uoregon.edu">pages.uoregon.edu/tgorordo</a>,
+             <a href="https://github.com/tgorordo/smithy">smithy</a></p>
+</footer> 
+</html>

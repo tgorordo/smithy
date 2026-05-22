@@ -1,5 +1,5 @@
 list:
-  just --list
+  just --list --unsorted
 
 run spreadsheet:
   uv run smithy {{spreadsheet}}
@@ -10,17 +10,17 @@ marimo:
 example:
   uv run python src/main.py test/test_ballot.csv
 
+format:
+  uv run ruff format src test
+
 check:
   uv run pyright src
 
 test:
   uv run pytest -vvv --tb=short --log-cli-level=INFO
 
-format:
-  uv run ruff format src test
-
 compile:
-  uv run pyinstaller --clean -F src/main.py --name smithy
+  uv run pyinstaller --clean -F src/cmd.py --name smithy
   
 clean:
   uv run pyclean src test
