@@ -45,7 +45,8 @@
 <p>This is an upload form for the <a href="https://github.com/tgorordo/smithy">smithy</a> RCV Ballot counter for identifying the Smith set (majority winners) in small elections,
 mainly to help with UO Physics Grad student elections of various flavors. This form uses the <a href="https://service.uoregon.edu/TDClient/2030/Portal/KB/ArticleDet?ID=43069">UO pages.uoregon.edu CGI Capability</a>,
 so the implementation of smithy being invoked can be <a href="https://pages.uoregon.edu/tgorordo/files/smithy/"> inspected here</a>
-and you may also inspect the source of this page to verify that <a href="https://pages.uoregon.edu/tgorordo/files/smithy/src/cgi/smithy.cgi?source">this script<a> is called to invoke it.
+and you may also inspect the source of this page to verify that <a href="https://pages.uoregon.edu/tgorordo/files/smithy/src/cgi/smithy.cgi?source">this script<a> is called to invoke it - though
+you have to trust it to be responding with its own contents faithfully.
 </p>
 
 <p> The <a href="https://en.wikipedia.org/wiki/Smith_set">Smith set</a> is the minimal set of candidates which can beat all others pairwise (by majority ranking)
@@ -57,7 +58,7 @@ and you may also inspect the source of this page to verify that <a href="https:/
 i.e. each row is the ranking provided by the ballot of a voter,
 e.g.:</p>
 
-<p><a href="../../test/test_ballot.csv">test_ballot.csv<a>:
+<p><a href="../../test/test_ballot.csv">test_ballot.csv<a>
 <table>
   <tr>
     <th>Alice</th>
@@ -85,7 +86,8 @@ e.g.:</p>
     <td>2</td>
   </tr>
 </table>
-(which has, as its Smith set a tie between "Alice" and "Bob")</p>
+where this reads that the first voter had preferences "Alice" over "Bob" over "Charlie", the second voter "Bob" over "Alice" over "Charlie", etc.
+(This example is constructed to demonstrate a situation without a singular majority winner - its Smith set a tie between "Alice" and "Bob")</p>
  
 <h3>Output: Smith Set Format</h3>
 <p>The form will return a list of the Smith-set winners sorted lexicographically (they are all equally good majority winners).
