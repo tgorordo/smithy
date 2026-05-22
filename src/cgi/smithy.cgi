@@ -2,4 +2,4 @@
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-exec "$SCRIPT_DIR/../smithy/.venv/bin/python" "$SCRIPT_DIR/../smithy/src/cgi/cgi.py"
+exec "$SCRIPT_DIR/../../.venv/bin/python" "$SCRIPT_DIR/script.py"
