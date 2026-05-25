@@ -12,6 +12,7 @@ from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
 
+import polars as pl
 from smithy import smith_set
 
 @click.command()
