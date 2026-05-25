@@ -34,6 +34,8 @@ this in your shell as `uv run src/smithycmd.py [...]` from within the repo after
 In either case, the command expects the same argument structure:
 TODO
 
+If you want a 'None' option in your election, it should be included as a candidate.
+
 While plain output is the default, so that the command can easily be used in a unix-pipe
 or `stdio` workflows, it can also pretty-print its output for your reading pleasure
 using [`rich`](https://rich.readthedocs.io/en/stable/introduction.html) if you pass it the 
