@@ -8,7 +8,7 @@ guaranteed the standard Condorcet i.e. Majority winner (they beat all others pai
 `smithy` identifies the Smith set via graph Strongly Connected Component (SCC) analysis of
 the pairwise majority graph using [`rustworkx`](https://www.rustworkx.org/). 
 Pairwise majority comparisons scale quadratically in the number of candidates and linearly 
-in the number of ballots, while while the SCC and condensation graph analysis is 
+in the number of ballots, while the SCC and condensation graph analysis is 
 approximately quadratic in the number of candidates for the dense tournament graphs typical 
 of Condorcet elections. Internally, repeated ballots are compressed/cache-counted before 
 pairwise evaluation to improve performance over duplicate rankings.
