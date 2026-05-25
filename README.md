@@ -45,8 +45,7 @@ using [`rich`](https://rich.readthedocs.io/en/stable/introduction.html) if you p
 hosts a [CGI form](https://service.uoregon.edu/TDClient/2030/Portal/KB/ArticleDet?ID=43069)
 which accepts a `.csv` or `.xls`(`x`) upload of a ballot-box and responds with the resulting
 Smith set. The application can typically handle ~100s of candidates and ~10ks of votes 
-before running into hosting resource limitations and timing out (pathological cases, involving
-many or large cycles, or especially a large cyclic tie, may perform worse and are not extensively tested).
+before running into hosting resource limitations and timing out.
 
 
 ### Python Package
