@@ -118,9 +118,9 @@ uv pip compile pyproject.toml -o requirements.txt --group dev
 
 
 ### Bundling, Releases, Deployment and Cleanup
-Bundling with [PyInstaller](https://pyinstaller.org/en/stable/index.html) can be done by
+Bundling the CLI command with [PyInstaller](https://pyinstaller.org/en/stable/index.html) can be done by
 ```bash
-uv run pyinstaller --clean -F src/cmd.py --name smithycmd
+uv run --with-requirements src/smithycmd.py pyinstaller --clean -F src/smithycmd.py
 ```
 (or `just compile`)
 which will output an executable `smithycmd` for the CLI in `dist/`, which can be uploaded
