@@ -18,7 +18,7 @@ or imported as a python package (TODO: a small [GUI](https://doc.qt.io/qtforpyth
 
 ### CLI Command
 `smithy` provides a [`click`](https://click.palletsprojects.com/en/stable/) 
-CLI command defined in `src/cmd.py` which can be invoked a couple of ways:
+CLI command defined in `src/smithycmd.py` which can be invoked a couple of ways:
 
 - The [GitHub Releases Page](https://github.com/tgorordo/smithy/releases) provides standalone
 CLI executables bundled using [PyInstaller](https://pyinstaller.org/en/stable/index.html)
