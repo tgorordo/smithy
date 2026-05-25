@@ -50,6 +50,8 @@ which accepts a `.csv` or `.xls`(`x`) upload of a ballot-box and responds with t
 Smith set. The application can typically handle ~100s of candidates and ~10ks of votes 
 before running into hosting resource limitations and timing out.
 
+No ballot data is retained on the server after execution.
+
 
 ### Python Package
 The `smithy` python package primarily provides the function `smith_set(ballot_box_df)` 
