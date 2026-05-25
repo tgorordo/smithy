@@ -28,6 +28,8 @@ def _pmg_from_rcv(ballots: pl.DataFrame) -> rwx.PyDiGraph:
     pmg = rwx.PyDiGraph()
     nodes = {c: pmg.add_node(c) for c in candidates}
 
+    #compressed = ballots.group_by(ballots.columns).len().rename({"len": "count"})
+
     exprs = []
     pairs = list(combinations(candidates, 2))
 
