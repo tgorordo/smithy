@@ -6,6 +6,7 @@
 #     "polars>=1.40.1"
 # ]
 # ///
+import sys, io
 import click
 
 from rich.console import Console
@@ -16,24 +17,27 @@ import polars as pl
 from smithy import smith_set
 
 @click.command()
-@click.argument("spreadsheet", type=click.Path(exists=True, dir_okay=False))
-def cli(spreadsheet: str) -> None:
+@click.argument("ballots", type=click.Path(exists=True, dir_okay=False))
+@click.option("--show-ballots", "-b", is_flag=True, help="Show relevant ballots (after selections).")
+@click.option("--pretty", "-p", is_flag=True, help="Pretty-print output.")
+def cli(ballots: str, show_ballots=False, pretty=False) -> None:
     """
-    Compute the Smith set from a ranked-choice ballot spreadsheet.
+    Compute the Smith set from a box of ranked-choice ballots -- .csv or .xls(x).
 
-    The Smith set is the minimal set of candidates which can beat all others pairwise - if there is a single winner
-    in the set they are guaranteed the Condorcet i.e. Majority winner.
+    The Smith set is the minimal set of candidates which can beat all others pairwise
+    (simple ranking majority) - if there is a single winner in the set, 
+    they are guaranteed the Condorcet i.e. Majority winner.
     """
 
     console = Console()
 
     try:
-        # Load spreadsheet
-        if spreadsheet.endswith(".csv"):
-            df = pl.read_csv(spreadsheet)
+        # Load ballots
+        if ballots.endswith(".csv"):
+            df = pl.read_csv(ballots)
 
-        elif spreadsheet.endswith((".xlsx", ".xls")):
-            df = pl.read_excel(spreadsheet)
+        elif ballots.endswith((".xlsx", ".xls")):
+            df = pl.read_excel(ballots)
 
         else:
             console.print(
@@ -56,27 +60,34 @@ def cli(spreadsheet: str) -> None:
         # Compute Smith set
         smiths = smith_set(df)
 
-        # Preview table
-        preview = Table(title="Ballot Box")
 
-        for col in df.columns:
-            preview.add_column(col)
+        if show_ballots and pretty:
+            preview = Table(title="Ballot Box")
 
-        for row in df.head(5).iter_rows():
-            preview.add_row(*map(str, row))
+            for col in df.columns:
+                preview.add_column(col)
 
-        console.print(preview)
+            for row in df.head(5).iter_rows():
+                preview.add_row(*map(str, row))
 
-        # Results
-        console.print()
+            console.print(preview)
+            console.print()
+        elif show_ballots and not pretty:
+            buf = io.StringIO()
+            df.write_csv(buf)
+            console.print(buf.getvalue())
+            console.print("---")
 
-        console.print(
-            Panel.fit(
-                "\n".join(f"• {c}" for c in smiths),
-                title="Resulting Smith Set",
-                border_style="green",
+        if pretty:
+            console.print(
+                Panel.fit(
+                    "\n".join(f"• {c}" for c in smiths),
+                    title="Resulting Smith Set",
+                    border_style="green",
+                )
             )
-        )
+        else:
+            console.print(", ".join(f"{c}" for c in smiths))
 
     except Exception as e:
         console.print(f"[bold red]Error:[/bold red] {e}")
