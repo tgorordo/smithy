@@ -26,7 +26,7 @@ for linux and windows on `x86_64` and linux on `aarch64`. Downloading the approp
 executable should give you access to the `smithycmd` CLI command.
 
 - Alternatively, if you are using `uv` (see [Development](#Development)), you can invoke 
-this in your shell as `uv run src/smithycmd.py [...]`.
+this in your shell as `uv run src/smithycmd.py [...]` from within the repo after cloning it locally.
 
 In either case, the command expects the same argument structure:
 TODO
