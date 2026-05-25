@@ -97,13 +97,13 @@ uv run ruff format src test
 which should be done before any `git` commit.
 
 This is not really taken full advantage of at the moment, but type hints can be checked
-by running
+by running [pyright](https://github.com/microsoft/pyright)
 ```bash
 uv run pyright src
 ```
 (or `just check`).
 
-A test suite can be run as
+A [pytest](https://docs.pytest.org/en/stable/) test suite can be run as
 ```bash
 uv run pytest -vvv --tb=short --log-cli-level=INFO
 ```
