@@ -7,6 +7,9 @@ run *args:
 marimo:
   uv run marimo --edit
 
+sync *args:
+  uv sync {{args}}
+
 format:
   uv run ruff format src test
 
