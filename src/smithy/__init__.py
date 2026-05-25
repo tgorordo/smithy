@@ -57,7 +57,6 @@ def smith_set_from_rcv(ballots: pl.DataFrame) -> list:
 
     """
 
-    # return smith_set_brutefrom_pairmaj(pairmaj_from_rcv(rcv_ballots))
     return ss_from_pmg(pmg_from_rcv(ballots))
 
 
