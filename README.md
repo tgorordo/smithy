@@ -1,9 +1,9 @@
 # Smithy
 *A simple Smith set solver for ranked-choice ballots.* 
 
-The Smith set is the minimal set of election candidates which can beat all others pairwise
+The [Smith set](https://en.wikipedia.org/wiki/Smith_set) is the minimal set of election candidates which can beat all others pairwise
 (by simple majority ranking preference) - if there is a single winner in the set they are 
-guaranteed the standard Condorcet i.e. Majority winner (they beat all others pairwise). 
+guaranteed the standard [Condorcet i.e. Majority winner](https://en.wikipedia.org/wiki/Condorcet_winner) (they beat all others pairwise). 
 
 `smithy` identifies the Smith set via graph Strongly Connected Component (SCC) analysis of
 the pairwise majority graph using [`rustworkx`](https://www.rustworkx.org/). 
