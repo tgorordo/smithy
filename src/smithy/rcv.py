@@ -1,6 +1,7 @@
 import polars as pl
 from itertools import combinations
 
+
 def pairmaj_from_rcv(rcv_ballots: pl.DataFrame) -> dict[str, set[str]]:
     """
     Build a pairwise majority winner graph from a box of Ranked-Choice Ballots.
@@ -15,7 +16,7 @@ def pairmaj_from_rcv(rcv_ballots: pl.DataFrame) -> dict[str, set[str]]:
     returns
     ---
     pairmaj_graph: dict[str, set[str]]
-        A pairwise majority winner graph whose nodes correspond to candidates and 
+        A pairwise majority winner graph whose nodes correspond to candidates and
         (directed) edges show which candidates they beat pairwise.
     """
     candidates = rcv_ballots.columns
@@ -38,9 +39,3 @@ def pairmaj_from_rcv(rcv_ballots: pl.DataFrame) -> dict[str, set[str]]:
             pairmaj_graph[b].add(a)
 
     return pairmaj_graph
-
-
-
-
-
-

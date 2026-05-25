@@ -16,16 +16,22 @@ from rich.panel import Panel
 import polars as pl
 from smithy import smith_set
 
+
 @click.command()
 @click.argument("ballots", type=click.Path(exists=True, dir_okay=False))
-@click.option("--show-ballots", "-b", is_flag=True, help="Show relevant ballots (after selections).")
+@click.option(
+    "--show-ballots",
+    "-b",
+    is_flag=True,
+    help="Show relevant ballots (after selections).",
+)
 @click.option("--pretty", "-p", is_flag=True, help="Pretty-print output.")
 def cli(ballots: str, show_ballots=False, pretty=False) -> None:
     """
     Compute the Smith set from a box of ranked-choice ballots -- .csv or .xls(x).
 
     The Smith set is the minimal set of candidates which can beat all others pairwise
-    (simple ranking majority) - if there is a single winner in the set, 
+    (simple ranking majority) - if there is a single winner in the set,
     they are guaranteed the Condorcet i.e. Majority winner.
     """
 
@@ -60,7 +66,6 @@ def cli(ballots: str, show_ballots=False, pretty=False) -> None:
         # Compute Smith set
         smiths = smith_set(df)
 
-
         if show_ballots and pretty:
             preview = Table(title="Ballot Box")
 
@@ -93,6 +98,7 @@ def cli(ballots: str, show_ballots=False, pretty=False) -> None:
         console.print(f"[bold red]Error:[/bold red] {e}")
 
         raise SystemExit(1)
+
 
 if __name__ == "__main__":
     cli()

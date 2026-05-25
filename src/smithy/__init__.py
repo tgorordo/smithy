@@ -17,8 +17,8 @@ def smith_set_brutefrom_pairmaj(pairmaj_graph: dict[str, set[str]]) -> list:
     returns
     ---
     smith_set: list
-        A list of the Smith set candidates - all are equally good winners; 
-        ordering is determined lexicographically. If there is a Condorcet winner 
+        A list of the Smith set candidates - all are equally good winners;
+        ordering is determined lexicographically. If there is a Condorcet winner
         (single Majority winner), the Smith set will contain that single candidate.
     """
 
@@ -42,11 +42,12 @@ def smith_set_brutefrom_pairmaj(pairmaj_graph: dict[str, set[str]]) -> list:
 
     return []
 
+
 def smith_set_from_rcv(rcv_ballots: pl.DataFrame) -> list:
     """
     Compute the Smith set from a Ranked-Choice ballot.
 
-    The Smith set is the minimal set of candidates which can beat all others pairwise - 
+    The Smith set is the minimal set of candidates which can beat all others pairwise -
     if there is a single winner in the set they are guaranteed the Condorcet i.e. Majority winner.
 
     parameters
@@ -59,16 +60,19 @@ def smith_set_from_rcv(rcv_ballots: pl.DataFrame) -> list:
     returns
     ---
     smith_set : list
-        A list of the Smith set candidates - all are equally good winners; 
-        ordering is determined lexicographically. If there is a Condorcet winner 
+        A list of the Smith set candidates - all are equally good winners;
+        ordering is determined lexicographically. If there is a Condorcet winner
         (single Majority winner), the Smith set will contain that single candidate.
 
     """
 
     return smith_set_brutefrom_pairmaj(pairmaj_from_rcv(rcv_ballots))
 
+
 def smith_set(df: pl.DataFrame, ballotkind="rcv") -> list:
     if ballotkind == "rcv":
         return smith_set_from_rcv(df)
     else:
-        raise NotImplementedError(f"`smith_set` ballotkind={ballotkind} is not implemented.")
+        raise NotImplementedError(
+            f"`smith_set` ballotkind={ballotkind} is not implemented."
+        )

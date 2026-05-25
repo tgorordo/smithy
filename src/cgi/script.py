@@ -6,12 +6,11 @@ import re
 
 import polars as pl
 
-sys.path.insert(0,
+sys.path.insert(
+    0,
     os.path.abspath(
-        os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), "../smithy/src"
-        )
-    )
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "../smithy/src")
+    ),
 )
 from smithy import smith_set_from_rcv
 
@@ -28,10 +27,10 @@ parts = body.split(b"--" + boundary)
 spreadsheet = None
 
 for part in parts:
-    if b'Content-Disposition' in part and b'name="spreadsheet"' in part:
+    if b"Content-Disposition" in part and b'name="spreadsheet"' in part:
         header, _, data = part.partition(b"\r\n\r\n")
 
-        filename_match = re.search(br'filename="([^"]+)"', header)
+        filename_match = re.search(rb'filename="([^"]+)"', header)
         if filename_match:
             filename = filename_match.group(1).decode()
             filedata = data.rstrip(b"\r\n--")
@@ -41,13 +40,12 @@ for part in parts:
 
 
 if spreadsheet is not None:
-
     filename, filedata = spreadsheet
 
     if filename and filedata:
         filepath = os.path.join("/tmp", filename)
 
-        with open(filepath, 'wb') as f:
+        with open(filepath, "wb") as f:
             f.write(filedata)
 
         try:
@@ -75,7 +73,7 @@ if spreadsheet is not None:
                     ]
                 )
 
-                smiths = smith_set_from_rcv(df) # Solve!
+                smiths = smith_set_from_rcv(df)  # Solve!
 
                 message = f"""
                 <h1>The Smith set winners are:</h1>
@@ -88,7 +86,6 @@ if spreadsheet is not None:
                 <p>DataFrame was empty.</p>
                 <p><a href="form.html">Go Back</a></p>
                 """
-
 
         except Exception as e:
             message = f"""
