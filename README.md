@@ -122,6 +122,7 @@ Bundling with [PyInstaller](https://pyinstaller.org/en/stable/index.html) can be
 ```bash
 uv run pyinstaller --clean -F src/cmd.py --name smithycmd
 ```
+(or `just compile`)
 which will output an executable `smithycmd` for the CLI in `dist/`, which can be uploaded
 to the latest [GitHub Releases Page](https://github.com/tgorordo/smithy/releases).
 
