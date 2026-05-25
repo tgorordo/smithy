@@ -13,7 +13,7 @@ sys.path.insert(0,
         )
     )
 )
-from smithy import smith_set
+from smithy import smith_set_from_rcv
 
 print("Content-Type: text/html\n")
 message = ""
@@ -75,7 +75,7 @@ if spreadsheet is not None:
                     ]
                 )
 
-                smiths = smith_set(df) # Solve!
+                smiths = smith_set_from_rcv(df) # Solve!
 
                 message = f"""
                 <h1>The Smith set winners are:</h1>
