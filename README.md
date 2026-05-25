@@ -12,6 +12,7 @@ in the number of ballots, while the SCC and condensation graph analysis is
 approximately quadratic in the number of candidates for the dense tournament graphs typical 
 of Condorcet elections. Internally, repeated ballots are compressed/cache-counted before 
 pairwise evaluation to improve performance over duplicate rankings.
+This is all overkill for small elections, but was fun.
 
 
 ## Usage
