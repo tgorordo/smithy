@@ -48,7 +48,7 @@ many or large cycles, or especially a large cyclic tie, may perform worse and ar
 
 ### Python Package
 The `smithy` python package primarily provides the function `smith_set(ballot_box_df)` 
-(defined in `src/smithy/rcv.py`), which returns the smith set given a 
+(defined in `src/smithy), which returns the smith set given a 
 [polars](https://docs.pola.rs/api/python/stable/reference/index.html) 
 dataframe `ballot_box_df` whose columns are candidates and whose rows are RCV ballots.
 
