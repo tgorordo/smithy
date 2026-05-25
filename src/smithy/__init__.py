@@ -1,16 +1,17 @@
 import polars as pl
+import rustworkx as rwx
 from itertools import combinations
 
-from .rcv import pairmaj_from_rcv
+from .rcv import pmg_from_rcv
 
 
-def smith_set_brutefrom_pairmaj(pairmaj_graph: dict[str, set[str]]) -> list:
+def ss_from_pmg(pmg: rwx.PyDiGraph) -> list[str]:
     """
-    Brute-force the Smith set from a pairwise majority winner graph.
+    Find the Smith set from a pairwise majority graph.
 
     parameters
     ---
-    pairmaj_graph: dict[str, set[str]]
+    pmg: rwx.PyDiGraph
         A graph whose nodes correspond to candidates and (directed) edges show
         which candidates they beat pairwise.
 
@@ -22,28 +23,18 @@ def smith_set_brutefrom_pairmaj(pairmaj_graph: dict[str, set[str]]) -> list:
         (single Majority winner), the Smith set will contain that single candidate.
     """
 
-    candidates = set(pairmaj_graph.keys())
-    size = len(candidates)
+    sccs = rwx.strongly_connected_components(pmg)
 
-    for size in range(1, len(candidates) + 1):
-        for sub in combinations(candidates, size):
-            subset = set(sub)
-            out = set(candidates) - subset
+    cg = rwx.condensation(pmg, sccs)
 
-            dom = True
+    src_sccs = [nd for nd in cg.node_indices() if cg.in_degree(nd) == 0]
 
-            for member in subset:
-                if not out.issubset(pairmaj_graph[member]):
-                    dom = False
-                    break
+    smith_set = sorted([c for scc in src_sccs for c in cg[scc]])
 
-            if dom:
-                return sorted(subset)
-
-    return []
+    return smith_set
 
 
-def smith_set_from_rcv(rcv_ballots: pl.DataFrame) -> list:
+def smith_set_from_rcv(ballots: pl.DataFrame) -> list:
     """
     Compute the Smith set from a Ranked-Choice ballot.
 
@@ -52,7 +43,7 @@ def smith_set_from_rcv(rcv_ballots: pl.DataFrame) -> list:
 
     parameters
     ---
-    df : pl.DataFrame
+    ballots : pl.DataFrame
         A Polars DataFrame representing ballots. Each column is a candidate and each
         row is is a voter's ranking of the candidates. Lower numbers indicate higher
         preference (1 = top-choice).
@@ -66,7 +57,8 @@ def smith_set_from_rcv(rcv_ballots: pl.DataFrame) -> list:
 
     """
 
-    return smith_set_brutefrom_pairmaj(pairmaj_from_rcv(rcv_ballots))
+    # return smith_set_brutefrom_pairmaj(pairmaj_from_rcv(rcv_ballots))
+    return ss_from_pmg(pmg_from_rcv(ballots))
 
 
 def smith_set(df: pl.DataFrame, ballotkind="rcv") -> list:

@@ -96,9 +96,7 @@ nbformat==5.10.4
 nodeenv==1.10.0
     # via pyright
 numpy==2.4.6
-    # via
-    #   smithy (pyproject.toml)
-    #   rustworkx
+    # via rustworkx
 openai==2.37.0
     # via pydantic-ai-slim
 opentelemetry-api==1.42.0

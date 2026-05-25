@@ -3,7 +3,8 @@
 # dependencies = [
 #     "click>=8.4.1",
 #     "rich>=15.0.0",
-#     "polars>=1.40.1"
+#     "polars>=1.40.1",
+#     "rustworkx>=0.17.1"
 # ]
 # ///
 import sys, io

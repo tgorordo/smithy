@@ -1556,7 +1556,6 @@ name = "smithy"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
-    { name = "numpy" },
     { name = "polars" },
     { name = "rustworkx" },
 ]
@@ -1584,7 +1583,6 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "click", marker = "extra == 'cli'", specifier = ">=8.4.0" },
-    { name = "numpy", specifier = ">=2.4.6" },
     { name = "polars", specifier = ">=1.40.1" },
     { name = "rich", marker = "extra == 'cli'", specifier = ">=15.0.0" },
     { name = "rustworkx", specifier = ">=0.17.1" },

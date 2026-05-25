@@ -1,8 +1,9 @@
 import polars as pl
+import rustworkx as rwx
 from itertools import combinations
 
 
-def pairmaj_from_rcv(rcv_ballots: pl.DataFrame) -> dict[str, set[str]]:
+def pmg_from_rcv(ballots: pl.DataFrame) -> rwx.PyDiGraph:
     """
     Build a pairwise majority winner graph from a box of Ranked-Choice Ballots.
 
@@ -15,27 +16,38 @@ def pairmaj_from_rcv(rcv_ballots: pl.DataFrame) -> dict[str, set[str]]:
 
     returns
     ---
-    pairmaj_graph: dict[str, set[str]]
+    nodes: dict[str, int]
+        A dictionary of candidate names to associated node ids.
+
+    pwm_graph: rwx.PyDiGraph
         A pairwise majority winner graph whose nodes correspond to candidates and
         (directed) edges show which candidates they beat pairwise.
     """
-    candidates = rcv_ballots.columns
+    candidates = ballots.columns
 
-    pairmaj_graph: dict[str, set[str]] = {c: set() for c in candidates}
+    pmg = rwx.PyDiGraph()
+    nodes = {c: pmg.add_node(c) for c in candidates}
 
-    for a, b in combinations(candidates, 2):
-        result = rcv_ballots.select(
+    exprs = []
+    pairs = list(combinations(candidates, 2))
+
+    for a, b in pairs:
+        exprs.extend(
             [
-                (pl.col(a) < pl.col(b)).sum().alias("a_wins"),
-                (pl.col(b) < pl.col(a)).sum().alias("b_wins"),
+                (pl.col(a) < pl.col(b)).sum().alias(f"{a}>{b}"),
+                (pl.col(b) < pl.col(a)).sum().alias(f"{b}>{a}"),
             ]
-        ).row(0)
+        )
 
-        a_wins, b_wins = result
+    results = ballots.select(exprs).row(0, named=True)
+
+    for a, b in pairs:
+        a_wins = results[f"{a}>{b}"]
+        b_wins = results[f"{b}>{a}"]
 
         if a_wins > b_wins:
-            pairmaj_graph[a].add(b)
+            pmg.add_edge(nodes[a], nodes[b], a_wins - b_wins)
         elif b_wins > a_wins:
-            pairmaj_graph[b].add(a)
+            pmg.add_edge(nodes[b], nodes[a], b_wins - a_wins)
 
-    return pairmaj_graph
+    return pmg

@@ -7,9 +7,6 @@ run *args:
 marimo:
   uv run marimo --edit
 
-example:
-  uv run python src/main.py test/test_ballot.csv
-
 format:
   uv run ruff format src test
 
