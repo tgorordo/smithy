@@ -5,10 +5,13 @@ The Smith set is the minimal set of election candidates which can beat all other
 (by simple majority ranking preference) - if there is a single winner in the set they are 
 guaranteed the standard Condorcet i.e. Majority winner (they beat all others pairwise). 
 
-`smithy` currently identifies the set by brute-force search which is combinatoric complexity
-in the worst case (TODO: better [algorithm](https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm)) 
-but appears approximately O(n^2) on-average in the number of candidates for typical/random ballots, 
-and linear in the number of ballots.
+`smithy` identifies the Smith set via graph Strongly Connected Component (SCC) analysis of
+the pairwise majority graph using [`rustworkx`](https://www.rustworkx.org/). 
+Pairwise majority comparisons scale quadratically in the number of candidates and linearly 
+in the number of ballots, while while the SCC and condensation graph analysis is 
+approximately quadratic in the number of candidates for the dense tournament graphs typical 
+of Condorcet elections. Internally, repeated ballots are compressed/cache-counted before 
+pairwise evaluation to improve performance over duplicate rankings.
 
 
 ## Usage
