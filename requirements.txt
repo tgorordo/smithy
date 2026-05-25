@@ -24,7 +24,6 @@ charset-normalizer==3.4.7
     # via requests
 click==8.4.0
     # via
-    #   smithy (pyproject.toml)
     #   marimo
     #   uvicorn
 distro==1.9.0
@@ -84,12 +83,8 @@ markdown==3.10.2
     # via
     #   marimo
     #   pymdown-extensions
-markdown-it-py==4.2.0
-    # via rich
 markupsafe==3.0.3
     # via jinja2
-mdurl==0.1.2
-    # via markdown-it-py
 msgspec==0.21.1
     # via marimo
 narwhals==2.21.2
@@ -151,7 +146,6 @@ pygments==2.20.0
     # via
     #   marimo
     #   pytest
-    #   rich
 pyinstaller==6.20.0
     # via smithy (pyproject.toml:dev)
 pyinstaller-hooks-contrib==2026.5
@@ -184,8 +178,6 @@ regex==2026.5.9
     # via tiktoken
 requests==2.34.2
     # via tiktoken
-rich==15.0.0
-    # via smithy (pyproject.toml)
 rpds-py==0.30.0
     # via
     #   jsonschema

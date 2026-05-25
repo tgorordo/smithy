@@ -1,7 +1,6 @@
 import polars as pl
 from itertools import combinations
 
-
 def smith_set(df: pl.DataFrame) -> list:
     """
     Compute the Smith set from a Ranked-Choice ballot.

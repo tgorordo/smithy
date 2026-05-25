@@ -1,8 +1,8 @@
 list:
   just --list --unsorted
 
-run spreadsheet:
-  uv run smithy {{spreadsheet}}
+run *args:
+  uv run src/smithycmd.py {{args}}
 
 marimo:
   uv run marimo --edit
@@ -25,7 +25,7 @@ compile:
 clean:
   uv run pyclean src test
   uv run ruff clean
-  rm -rf main.spec cli.spec build dist .pytest_cache .hypothesis .benchmarks __marimo__
+  rm -rf smithy.spec build dist .pytest_cache .hypothesis .benchmarks __marimo__
   
 wipe:
   just clean

@@ -8,13 +8,17 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
-    "click>=8.4.0",
     "polars>=1.40.1",
+]
+
+[project.optional-dependencies]
+cli = [
+    "click>=8.4.0",
     "rich>=15.0.0",
 ]
 
-[project.scripts]
-smithy = "smithy:cli"
+#[project.scripts]
+#smithy = "smithycmd:cli"
 
 [build-system]
 requires = ["uv_build>=0.11.7,<0.12.0"]
