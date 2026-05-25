@@ -7,7 +7,7 @@ guaranteed the standard Condorcet i.e. Majority winner (they beat all others pai
 
 `smithy` currently identifies the set by brute-force search which is combinatoric complexity
 in the worst case (TODO: better [algorithm](https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm)) 
-but appears approximately $O(n^2)$ on-average in the number of candidates for typical/random ballots, 
+but appears approximately O(n^2) on-average in the number of candidates for typical/random ballots, 
 and linear in the number of ballots.
 
 
