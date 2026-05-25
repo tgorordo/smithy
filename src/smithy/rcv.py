@@ -3,7 +3,7 @@ import rustworkx as rwx
 from itertools import combinations
 
 
-def _pmg_from_rcv(ballots: pl.DataFrame) -> rwx.PyDiGraph:
+def pmg_from_rcv_polars(ballots: pl.DataFrame) -> rwx.PyDiGraph:
     """
     Build a pairwise majority winner graph from a box of Ranked-Choice Ballots.
 
@@ -54,7 +54,7 @@ def _pmg_from_rcv(ballots: pl.DataFrame) -> rwx.PyDiGraph:
 
     return pmg
 
-def pmg_from_rcv(ballots: pl.DataFrame) -> rwx.PyDiGraph:
+def pmg_from_rcv_numpy(ballots: pl.DataFrame) -> rwx.PyDiGraph:
     """
     Build a pairwise majority winner graph from a box of Ranked-Choice Ballots.
 
@@ -98,3 +98,11 @@ def pmg_from_rcv(ballots: pl.DataFrame) -> rwx.PyDiGraph:
                 pmg.add_edge(nodes[b], nodes[a], int(b_wins - a_wins))
 
     return pmg
+
+def pmg_from_rcv(ballots: pl.DataFrame, method="polars") -> rwx.PyDiGraph:
+    if method == "polars":
+        return pmg_from_rcv_polars(ballots)
+    elif method == "numpy":
+        return pmg_from_rcv_numpy(ballots)
+    else:
+        raise NotImplementedError(f"`pmg_from_rcv` method={method} not implemented.")
