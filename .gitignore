@@ -1,0 +1,16 @@
+
+__pycache__/
+
+.venv
+.venv/
+venv/
+
+smithycmd.spec
+smithygui.spec
+build/
+dist/
+
+.ipynb_checkpoints
+.ruff_cache/
+.pytest_cache/
+.benchmarks/
