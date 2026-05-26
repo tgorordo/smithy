@@ -49,6 +49,10 @@ Options:
   -p, --pretty        Pretty-print output.
   --help              Show this message and exit.
 ```
+where the ballots file should be a `.csv` or `.xls`(`x`) whose columns are candidates and whose
+rows are numerical RCV ballot rankings (lower number is best, 1st, 2nd, 3rd, etc.).
+(see the [web deployment](https://pages.uoregon.edu/tgorordo/files/smithy/src/cgi/form.html)
+or `test/` for some examples).
 
 If you want a 'None' option in your election, it should be included as a candidate.
 
