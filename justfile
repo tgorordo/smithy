@@ -4,6 +4,9 @@ list:
 run *args:
   uv run src/smithycmd.py {{args}}
 
+python *arguments:
+  uv run python -c {{arguments}}
+
 marimo:
   uv run marimo --edit
 
