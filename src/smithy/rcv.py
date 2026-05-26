@@ -28,20 +28,18 @@ def pmg_from_rcv_polars(ballots: pl.DataFrame) -> rwx.PyDiGraph:
     pmg = rwx.PyDiGraph()
     nodes = {c: pmg.add_node(c) for c in candidates}
 
-    #compressed = ballots.group_by(ballots.columns).len().rename({"len": "count"})
+    compressed = ballots.group_by(ballots.columns).len().rename({"len": "count"})
 
     exprs = []
     pairs = list(combinations(candidates, 2))
 
     for a, b in pairs:
-        exprs.extend(
-            [
-                (pl.col(a) < pl.col(b)).sum().alias(f"{a}>{b}"),
-                (pl.col(b) < pl.col(a)).sum().alias(f"{b}>{a}"),
-            ]
-        )
+        exprs.extend([
+            pl.when(pl.col(a) < pl.col(b)).then(pl.col("count")).otherwise(0).sum().alias(f"{a}>{b}"),
+            pl.when(pl.col(b) < pl.col(a)).then(pl.col("count")).otherwise(0).sum().alias(f"{b}>{a}")
+        ])
 
-    results = ballots.select(exprs).row(0, named=True)
+    results = compressed.select(exprs).row(0, named=True)
 
     for a, b in pairs:
         a_wins = results[f"{a}>{b}"]
@@ -99,7 +97,7 @@ def pmg_from_rcv_numpy(ballots: pl.DataFrame) -> rwx.PyDiGraph:
 
     return pmg
 
-def pmg_from_rcv(ballots: pl.DataFrame, method="polars") -> rwx.PyDiGraph:
+def pmg_from_rcv(ballots: pl.DataFrame, method="numpy") -> rwx.PyDiGraph:
     if method == "polars":
         return pmg_from_rcv_polars(ballots)
     elif method == "numpy":
