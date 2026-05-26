@@ -59,7 +59,8 @@ If you want a 'None' option in your election, it should be included as a candida
 While plain output is the default, so that the command can easily be used in a unix-pipe
 or `stdio` workflows, it can also pretty-print its output for your reading pleasure
 using [`rich`](https://rich.readthedocs.io/en/stable/introduction.html) if you pass it the 
-`--pretty` (or `-p`) flag.
+`--pretty` (or `-p`) flag. Whether to show the input ballots during output is also
+controlled by a corresponding flag.
 
 
 ### UOregon CGI Application
