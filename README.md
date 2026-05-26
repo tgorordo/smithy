@@ -33,7 +33,22 @@ executable should give you access to the `smithycmd` CLI command.
 this in your shell as `uv run src/smithycmd.py [...]` from within the repo after cloning it locally.
 
 In either case, the command expects the same argument structure:
-TODO
+```bash
+$ uv run src/smithycmd.py --help
+Usage: smithycmd.py [OPTIONS] BALLOTS
+
+  Compute the Smith set from a box of ranked-choice ballots -- .csv or
+  .xls(x).
+
+  The Smith set is the minimal set of candidates which can beat all others
+  pairwise (simple ranking majority) - if there is a single winner in the set,
+  they are guaranteed the Condorcet i.e. Majority winner.
+
+Options:
+  -b, --show-ballots  Show relevant ballots (after selections).
+  -p, --pretty        Pretty-print output.
+  --help              Show this message and exit.
+```
 
 If you want a 'None' option in your election, it should be included as a candidate.
 
