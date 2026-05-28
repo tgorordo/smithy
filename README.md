@@ -105,6 +105,8 @@ pip install .
 [this brief guide might be helpful](https://pages.uoregon.edu/tgorordo/courses/uoph410-510a_Image-Analysis/setup.html)).
 
 
+(The core algorithm is also pretty dead simple, and you could just copy it over into your project too).
+
 ## Development
 Current development tooling is based on the [`uv`](https://docs.astral.sh/uv/) Python package and
 project manager. A [`justfile`](https://github.com/casey/just) lists some common useful
