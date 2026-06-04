@@ -14,7 +14,7 @@ of Condorcet elections. Internally, repeated ballots are compressed/cache-counte
 pairwise evaluation to improve performance over duplicate rankings.
 This is all overkill for small elections, but is fun.
 
-(TODO: for small elections because enumerating all IRV paths scales badly in the event of many tied counts, optionally resolve nontrivial Smith sets - majoritarian ties - via IRV within the set, at least reducing to an IRV winner set within the Smith set if not likely identifying a unique candidate who wins all paths).
+(TODO: for small elections -because enumerating all IRV paths scales badly in the event of many tied counts-, optionally resolve nontrivial Smith sets -majoritarian ties- via IRV within the set, at least reducing to an IRV winner set within the Smith set if not likely identifying a unique candidate who wins all paths).
 
 
 ## Usage
