@@ -3,7 +3,7 @@
 
 The [Smith set](https://en.wikipedia.org/wiki/Smith_set) is the minimal set of election candidates which can beat all others pairwise
 (by simple majority ranking preference) - if there is a single winner in the set they are 
-guaranteed the standard [Condorcet i.e. Majority winner](https://en.wikipedia.org/wiki/Condorcet_winner) (they beat all others pairwise). (TODO: for small elections, optionally resolve nontrivial Smith sets - ties - via plurality methods within the set, at least reducing to something like e.g. an IRV winner set within the Smith set if not likely identifying a unique candidate who wins all paths).
+guaranteed the standard [Condorcet i.e. Majority winner](https://en.wikipedia.org/wiki/Condorcet_winner) (they beat all others pairwise).
 
 `smithy` identifies the Smith set via graph Strongly Connected Component (SCC) analysis of
 the pairwise majority graph using [`rustworkx`](https://www.rustworkx.org/). 
@@ -13,6 +13,8 @@ approximately quadratic in the number of candidates for the dense tournament gra
 of Condorcet elections. Internally, repeated ballots are compressed/cache-counted before 
 pairwise evaluation to improve performance over duplicate rankings.
 This is all overkill for small elections, but is fun.
+
+(TODO: for small elections because enumerating all IRV paths scales badly in the event of many ties, optionally resolve nontrivial Smith sets - ties - via plurality methods within the set, at least reducing to something like e.g. an IRV winner set within the Smith set if not likely identifying a unique candidate who wins all paths).
 
 
 ## Usage
