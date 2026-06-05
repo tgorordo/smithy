@@ -15,7 +15,7 @@ pairwise evaluation to improve performance over duplicate rankings.
 This is all overkill for small elections, but is fun.
 
 Optionally, `smithy` can try to further resolve a nontrivial Smith set (a majoritarian tie or cycle) by running all-paths IRV within the set - at least reducing to an IRV winner set (the set of candidates that win at least one IRV elimination path) within the Smith set that are not only pairwise competitive but can also build competitive plurality
-coalitions within the set; in practice this is likely to result in a unique delegate (if they win all IRV elimination paths) which can claim a plurality coalition amongst the majority winners. This should identify a winning candidate as the best possible focal point for voluntary coordination; if your elections have other priorities you may want to resolve nontrivial Smith sets differently.
+coalitions within the set; in practice this often resolves cycles and is likely to result in a unique delegate (if they win all IRV elimination paths) which can claim a plurality coalition amongst the majority winners. This should identify a winning candidate as the best possible focal point for voluntary coordination; if your elections have other priorities you may want to resolve nontrivial Smith sets differently.
 
 
 ## Usage
