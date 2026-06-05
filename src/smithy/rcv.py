@@ -3,7 +3,7 @@ import rustworkx as rwx
 from itertools import combinations
 
 
-def pmg_from_rcv_polars(ballots: pl.DataFrame) -> rwx.PyDiGraph:
+def pmg_from_rcv_bigslow(ballots: pl.DataFrame) -> rwx.PyDiGraph:
     """
     Build a pairwise majority winner graph from a box of Ranked-Choice Ballots.
 
@@ -34,10 +34,20 @@ def pmg_from_rcv_polars(ballots: pl.DataFrame) -> rwx.PyDiGraph:
     pairs = list(combinations(candidates, 2))
 
     for a, b in pairs:
-        exprs.extend([
-            pl.when(pl.col(a) < pl.col(b)).then(pl.col("count")).otherwise(0).sum().alias(f"{a}>{b}"),
-            pl.when(pl.col(b) < pl.col(a)).then(pl.col("count")).otherwise(0).sum().alias(f"{b}>{a}")
-        ])
+        exprs.extend(
+            [
+                pl.when(pl.col(a) < pl.col(b))
+                .then(pl.col("count"))
+                .otherwise(0)
+                .sum()
+                .alias(f"{a}>{b}"),
+                pl.when(pl.col(b) < pl.col(a))
+                .then(pl.col("count"))
+                .otherwise(0)
+                .sum()
+                .alias(f"{b}>{a}"),
+            ]
+        )
 
     results = compressed.select(exprs).row(0, named=True)
 
@@ -52,7 +62,8 @@ def pmg_from_rcv_polars(ballots: pl.DataFrame) -> rwx.PyDiGraph:
 
     return pmg
 
-def pmg_from_rcv_numpy(ballots: pl.DataFrame) -> rwx.PyDiGraph:
+
+def pmg_from_rcv_smallfast(ballots: pl.DataFrame) -> rwx.PyDiGraph:
     """
     Build a pairwise majority winner graph from a box of Ranked-Choice Ballots.
 
@@ -79,17 +90,17 @@ def pmg_from_rcv_numpy(ballots: pl.DataFrame) -> rwx.PyDiGraph:
 
     compressed = ballots.group_by(ballots.columns).len().rename({"len": "count"})
     counts = compressed["count"].to_numpy()
-    
+
     arr = compressed.drop("count").to_numpy()
     results = ((arr[:, :, None] < arr[:, None, :]) * counts[:, None, None]).sum(axis=0)
 
     for i, a in enumerate(candidates):
         for j in range(i + 1, len(candidates)):
             b = candidates[j]
-            
+
             a_wins = results[i, j]
             b_wins = results[j, i]
-            
+
             if a_wins > b_wins:
                 pmg.add_edge(nodes[a], nodes[b], int(a_wins - b_wins))
             elif b_wins > a_wins:
@@ -97,10 +108,11 @@ def pmg_from_rcv_numpy(ballots: pl.DataFrame) -> rwx.PyDiGraph:
 
     return pmg
 
-def pmg_from_rcv(ballots: pl.DataFrame, method="numpy") -> rwx.PyDiGraph:
-    if method == "polars":
-        return pmg_from_rcv_polars(ballots)
-    elif method == "numpy":
-        return pmg_from_rcv_numpy(ballots)
+
+def pmg_from_rcv(ballots: pl.DataFrame, method="bigslow") -> rwx.PyDiGraph:
+    if method == "bigslow":
+        return pmg_from_rcv_bigslow(ballots)
+    elif method == "smallfast":
+        return pmg_from_rcv_smallfast(ballots)
     else:
         raise NotImplementedError(f"`pmg_from_rcv` method={method} not implemented.")

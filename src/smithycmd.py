@@ -15,11 +15,16 @@ from rich.table import Table
 from rich.panel import Panel
 
 import polars as pl
-from smithy import smith_set
+from smithy import smith_set, irv_set
 
 
 @click.command()
 @click.argument("ballots", type=click.Path(exists=True, dir_okay=False))
+@click.option(
+    "--try-resolve-irv",
+    is_flag=True,
+    help="Try to reduce or resolve the Smith set by running all-paths IRV on the set.",
+)
 @click.option(
     "--show-ballots",
     "-b",
@@ -27,7 +32,7 @@ from smithy import smith_set
     help="Show relevant ballots (after selections).",
 )
 @click.option("--pretty", "-p", is_flag=True, help="Pretty-print output.")
-def cli(ballots: str, show_ballots=False, pretty=False) -> None:
+def cli(ballots: str, try_resolve_irv=False, show_ballots=False, pretty=False) -> None:
     """
     Compute the Smith set from a box of ranked-choice ballots -- .csv or .xls(x).
 
@@ -56,7 +61,7 @@ def cli(ballots: str, show_ballots=False, pretty=False) -> None:
         df = df.with_columns(
             [
                 pl.col(c)
-                .cast(pl.Utf8)
+                .cast(pl.String)
                 .str.strip_chars()
                 .cast(pl.Int64, strict=False)
                 .fill_null(0)
@@ -66,6 +71,9 @@ def cli(ballots: str, show_ballots=False, pretty=False) -> None:
 
         # Compute Smith set
         smiths = smith_set(df)
+        if len(smiths) > 1 and try_resolve_irv:
+            irv_ballots = df.select(smiths)
+            smiths = irv_set(irv_ballots)
 
         if show_ballots and pretty:
             preview = Table(title="Ballot Box")
@@ -88,7 +96,9 @@ def cli(ballots: str, show_ballots=False, pretty=False) -> None:
             console.print(
                 Panel.fit(
                     "\n".join(f"• {c}" for c in smiths),
-                    title="Resulting Smith Set",
+                    title="Resulting IRV-resolved Smith Set"
+                    if (try_resolve_irv)
+                    else "Resulting Smith Set",
                     border_style="green",
                 )
             )

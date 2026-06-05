@@ -3,6 +3,7 @@ import rustworkx as rwx
 from itertools import combinations
 
 from .rcv import pmg_from_rcv
+from .irv import irv_from_rcv
 
 
 def ss_from_pmg(pmg: rwx.PyDiGraph) -> list[str]:
@@ -66,4 +67,13 @@ def smith_set(df: pl.DataFrame, ballotkind="rcv") -> list:
     else:
         raise NotImplementedError(
             f"`smith_set` ballotkind={ballotkind} is not implemented."
+        )
+
+
+def irv_set(df: pl.DataFrame, ballotkind="rcv") -> list:
+    if ballotkind == "rcv":
+        return irv_from_rcv(df)
+    else:
+        raise NotImplementedError(
+            f"`irv_set` ballotkind={ballotkind} is not implemented."
         )
