@@ -59,6 +59,9 @@ def pmg_from_rcv_bigslow(ballots: pl.DataFrame) -> rwx.PyDiGraph:
             pmg.add_edge(nodes[a], nodes[b], a_wins - b_wins)
         elif b_wins > a_wins:
             pmg.add_edge(nodes[b], nodes[a], b_wins - a_wins)
+        else: # tie
+            pmg.add_edge(nodes[a], nodes[b], 0)
+            pmg.add_edge(nodes[b], nodes[a], 0)
 
     return pmg
 
@@ -105,6 +108,9 @@ def pmg_from_rcv_smallfast(ballots: pl.DataFrame) -> rwx.PyDiGraph:
                 pmg.add_edge(nodes[a], nodes[b], int(a_wins - b_wins))
             elif b_wins > a_wins:
                 pmg.add_edge(nodes[b], nodes[a], int(b_wins - a_wins))
+            else: # tie
+                pmg.add_edge(nodes[a], nodes[b], 0)
+                pmg.add_edge(nodes[b], nodes[a], 0)
 
     return pmg
 
